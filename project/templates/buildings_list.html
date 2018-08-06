@@ -22,14 +22,14 @@
                 {% elif order_by == 'year_built' and reverse == '1' %}&darr;
                 {% endif %}
             </th>
-            <!--<th>Residents list</th>-->
+            <th>Residents number</th>
         </tr>
         {% for building in object_list %}
             <tr>
-                <td><a href = "{% url "building_residents" building.pk %}">{{ building.address }}</td>
+                <td>{{ building.address }}</td>
                 <td>{{ building.apartments_quantity }}</td>
                 <td>{{ building.year_built }}</td>
-                <!--<td>{{ building.residents_names_list }}</a></td>-->
+                <td><a href = "{% url "building_residents" building.pk %}">{{ building.residents_names_list|length }}</a></td>
             </tr>
         {% endfor %}
     {% endwith %}
