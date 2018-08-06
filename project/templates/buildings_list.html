@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Buildings List</h2>
+<table>
+    {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+        <tr>
+            <th><a href="{% url "buildings"  %}?order_by=address{% if order_by == 'address' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Address
+                {% if order_by == 'address' and reverse != '1' %}&uarr;
+                {% elif order_by == 'address' and reverse == '1' %}&darr;
+                {% endif %}
+            </th>
+            <th><a href="{% url "buildings" %}?order_by=apartments_quantity{% if order_by == 'apartments_quantity' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Apartments quantity
+                {% if order_by == 'apartments_quantity' and reverse != '1' %}&uarr;
+                {% elif order_by == 'apartments_quantity' and reverse == '1' %}&darr;
+                {% endif %}
+            </th>
+            <th><a href="{% url "buildings" %}?order_by=year_built{% if order_by == 'year_built' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Year built
+                {% if order_by == 'year_built' and reverse != '1' %}&uarr;
+                {% elif order_by == 'year_built' and reverse == '1' %}&darr;
+                {% endif %}
+            </th>
+            <!--<th>Residents list</th>-->
+        </tr>
+        {% for building in object_list %}
+            <tr>
+                <td><a href = "{% url "residents" building.pk %}">{{ building.address }}</td>
+                <td>{{ building.apartments_quantity }}</td>
+                <td>{{ building.year_built }}</td>
+                <!--<td>{{ building.residents_names_list }}</a></td>-->
+            </tr>
+        {% endfor %}
+    {% endwith %}
+</table>
+{% endblock %}

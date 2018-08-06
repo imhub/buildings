@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}
+{% block content %}
+{% if object_list|length > 0 %}
+<h2>Residents List for {{ object_list.0.building.address }}</h2>
+<table>
+{% with order_by=request.GET.order_by reverse=request.GET.reverse building_pk=request.GET.building_pk %}
+<tr>
+<th><a href="{% url "residents" object_list.0.building.pk %}?order_by=full_name{% if order_by == 'full_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+Full name
+{% if order_by == 'full_name' and reverse != '1' %}&uarr;
+{% elif order_by == 'full_name' and reverse == '1' %}&darr;
+                    {% endif %}
+                </th>
+                <th><a href="{% url "residents" object_list.0.building.pk  %}?order_by=birth_date{% if order_by == 'birth_date' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                    Birth date
+                    {% if order_by == 'birth_date' and reverse != '1' %}&uarr;
+                    {% elif order_by == 'birth_date' and reverse == '1' %}&darr;
+                    {% endif %}
+                </th>
+                <th><a href="{% url "residents" object_list.0.building.pk %}?order_by=apartment_number{% if order_by == 'apartment_number' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                    Apartment number
+                    {% if order_by == 'apartment_number' and reverse != '1' %}&uarr;
+                    {% elif order_by == 'apartment_number' and reverse == '1' %}&darr;
+                    {% endif %}
+                </th>
+            </tr>
+            {% for resident in object_list %}
+                <tr>
+                    <td>{{ resident.full_name }}</td>
+                    <td>{{ resident.birth_date }}</td>
+                    <td>{{ resident.apartment_number }}</td>
+                </tr>
+            {% endfor %}
+        {% endwith %}
+    </table>
+{% else %}
+    <h2>No residents here</h2>
+{% endif %}
+<h4><a href="/buildings">Back to the Buildings list</a></h4>
+{% endblock %}
+
+
