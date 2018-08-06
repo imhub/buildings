@@ -16,6 +16,19 @@ class BuildingList(ListView):
                 buildings = buildings.reverse()
         return buildings
 
+class ResidentList(ListView):
+
+    model = Resident
+
+    def get_queryset(self):
+        residents = Resident.objects.all()
+        order = self.request.GET.get('order_by', '')
+        if order in ('full_name', 'birth_date', 'apartment_number'):
+            residents = residents.order_by(order)
+            if self.request.GET.get('reverse', '') == '1':
+                residents = residents.reverse()
+        return residents
+
 
 class BuildingResidentsList(ListView):
 
@@ -24,10 +37,10 @@ class BuildingResidentsList(ListView):
     def get_queryset(self):
         self.building = get_object_or_404(Building,
                                           pk=self.kwargs['building_pk'])
-        residents = Resident.objects.filter(building=self.building)
+        building_residents = Resident.objects.filter(building=self.building)
         order = self.request.GET.get('order_by', '')
         if order in ('full_name', 'birth_date', 'apartment_number'):
-            residents = residents.order_by(order)
+            building_residents = building_residents.order_by(order)
             if self.request.GET.get('reverse', '') == '1':
-                residents = residents.reverse()
-        return residents
+                building_residents = building_residents.reverse()
+        return building_residents

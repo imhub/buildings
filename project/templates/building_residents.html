@@ -1,22 +1,23 @@
 
 {% extends 'base.html' %}
 {% block content %}
-    <table>
-        {% with order_by=request.GET.order_by reverse=request.GET.reverse building_pk=request.GET.building_pk %}
+{% if object_list|length > 0 %}
+    <h2>Residents List for {{ object_list.0.building.address }}</h2>
+        <table>
+            {% with order_by=request.GET.order_by reverse=request.GET.reverse building_pk=request.GET.building_pk %}
             <tr>
-                <th><a href="{% url "residents" %}?order_by=full_name{% if order_by == 'full_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
-                    Full name
-                    {% if order_by == 'full_name' and reverse != '1' %}&uarr;
-                    {% elif order_by == 'full_name' and reverse == '1' %}&darr;
+                <th><a href="{% url "building_residents" object_list.0.building.pk %}?order_by=full_name{% if order_by == 'full_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                    Full name {% if order_by == 'full_name' and reverse != '1' %}&uarr;
+                     {% elif order_by == 'full_name' and reverse == '1' %}&darr;
                     {% endif %}
                 </th>
-                <th><a href="{% url "residents" %}?order_by=birth_date{% if order_by == 'birth_date' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <th><a href="{% url "building_residents" object_list.0.building.pk  %}?order_by=birth_date{% if order_by == 'birth_date' and reverse != '1' %}&amp;reverse=1{% endif %}">
                     Birth date
                     {% if order_by == 'birth_date' and reverse != '1' %}&uarr;
                     {% elif order_by == 'birth_date' and reverse == '1' %}&darr;
                     {% endif %}
                 </th>
-                <th><a href="{% url "residents" %}?order_by=apartment_number{% if order_by == 'apartment_number' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                <th><a href="{% url "building_residents" object_list.0.building.pk %}?order_by=apartment_number{% if order_by == 'apartment_number' and reverse != '1' %}&amp;reverse=1{% endif %}">
                     Apartment number
                     {% if order_by == 'apartment_number' and reverse != '1' %}&uarr;
                     {% elif order_by == 'apartment_number' and reverse == '1' %}&darr;
@@ -32,6 +33,9 @@
             {% endfor %}
         {% endwith %}
     </table>
+{% else %}
+    <h2>No residents here</h2>
+{% endif %}
 <h4><a href="/buildings">Back to the Buildings list</a></h4>
 {% endblock %}
 
