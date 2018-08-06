@@ -1,6 +1,10 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from .models import Building, Resident
+
+
+def homepage(request):
+    return render(request, 'homepage.html')
 
 
 class BuildingList(ListView):

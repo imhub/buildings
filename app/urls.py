@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import BuildingList, ResidentList, BuildingResidentsList
+from .views import homepage, BuildingList, ResidentList, BuildingResidentsList
 
-urlpatterns = [path('buildings/',
+urlpatterns = [path('', homepage, name='home'),
+               path('buildings/',
                     BuildingList.as_view(template_name='buildings_list.html'),
                     name='buildings'),
                path('residents/', ResidentList.as_view(

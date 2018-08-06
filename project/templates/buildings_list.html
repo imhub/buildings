@@ -26,7 +26,7 @@
         </tr>
         {% for building in object_list %}
             <tr>
-                <td>{{ building.address }}</td>
+                <td><a href = "{% url "building_residents" building.pk %}">{{ building.address }}</a></td>
                 <td>{{ building.apartments_quantity }}</td>
                 <td>{{ building.year_built }}</td>
                 <td><a href = "{% url "building_residents" building.pk %}">{{ building.residents_names_list|length }}</a></td>
